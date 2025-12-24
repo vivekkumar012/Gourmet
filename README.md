@@ -9,6 +9,7 @@ This project is built using **Next.js** and bootstrapped with
 
 ### Frontend
 - **Next.js**
+- **Shadcn Ui**
 - **TypeScript**
 
 ### Authentication
