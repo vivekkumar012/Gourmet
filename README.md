@@ -29,16 +29,9 @@ This project is built using **Next.js** and bootstrapped with
 ### Prerequisites
 - Node.js (v18 or higher recommended)
 - npm / yarn / pnpm / bun
+- clone the repo and npm run dev
 
----
 
-### Run the Development Server
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 👨‍💻 Author
+- **Vivek Kumar**
+- Built with ❤️ using Next.js, TypeScript, and PostgreSQL.
