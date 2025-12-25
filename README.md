@@ -31,6 +31,7 @@ This project is built using **Next.js** and bootstrapped with
 - npm / yarn / pnpm / bun
 - clone the repo and npm run dev
 
+---
 
 ## 👨‍💻 Author
 - **Vivek Kumar**
