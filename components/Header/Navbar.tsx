@@ -55,6 +55,7 @@ export const Navbar = (props: Props) => {
             <UserButton />
           </SignedIn>
 
+          {/* Mobile Ke Liye */}
           <Button
             size={"icon"}
             variant={"ghost"}
@@ -69,7 +70,7 @@ export const Navbar = (props: Props) => {
           </Button>
         </div>
       </div>
-      
+
       {menuOpen && (
         <div className="md:hidden px-4 py-2 border-t bg-background space-y-2">
           <Link href={"/menu"} className="block text-sm font-medium">
