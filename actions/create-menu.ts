@@ -1,5 +1,8 @@
 "use server"
-import {z} from "zod"
+import { prisma } from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+import { z } from "zod"
 
 type CreateMenuFormState = {
     errors: {
@@ -24,9 +27,45 @@ const formSchema = z.object({
         .or(z.literal("")), // allow empty string
 });
 
-export const createMenuAction = async (initialState: CreateMenuFormState, formData: FormData) => {
+export const createMenuAction = async (initialState: CreateMenuFormState, formData: FormData): Promise<CreateMenuFormState> => {
     const result = formSchema.safeParse({
         name: formData.get("name") as string,
-        description: formData.get("description")
-    })
+        description: formData.get("description") as string,
+        category: formData.get("category") as string,
+        price: formData.get("price") as string,
+        imageUrl: formData.get("image") as string
+    });
+    if(!result.success) {
+        return {
+            errors: result.error.flatten().fieldErrors,
+        }
+    }
+    try {
+        //save data inside database
+        await prisma.menuItem.create({
+            data: {
+                name: result.data.name,
+                description: result.data.description,
+                category: result.data.category,
+                price: result.data.price,
+                imageUrl: result.data.image!
+            }
+        })
+    } catch (error: unknown) {
+        if(error instanceof Error) {
+            return {
+                errors: {
+                    formError: [error.message]
+                }
+            }
+        } else {
+            return {
+                errors: {
+                    formError: ["An Unexpected error occured"]
+                }
+            }
+        }
+    }
+    revalidatePath("/admin/menu");
+    redirect("/admin/menu");
 }
