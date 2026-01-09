@@ -10,7 +10,7 @@ type CreateMenuFormState = {
         description?: string[];
         category?: string[];
         price?: string[];
-        image?: string[];
+        imageUrl?: string[];
         formError?: string[];
     };
 };
@@ -20,7 +20,7 @@ const formSchema = z.object({
     description: z.string().min(1, { message: "Description is required" }),
     category: z.string().min(1, { message: "Category is required" }),
     price: z.coerce.number().min(0.01, { message: "Price must be at least $0.01" }),
-    image: z
+    imageUrl: z
         .string()
         .url({ message: "Image must be a valid URL" })
         .optional()
@@ -33,22 +33,24 @@ export const createMenuAction = async (initialState: CreateMenuFormState, formDa
         description: formData.get("description") as string,
         category: formData.get("category") as string,
         price: formData.get("price") as string,
-        imageUrl: formData.get("image") as string
+        imageUrl: formData.get("imageUrl") as string  // Changed from "image" to "imageUrl"
     });
+    
     if(!result.success) {
         return {
             errors: result.error.flatten().fieldErrors,
         }
     }
+    
     try {
-        //save data inside database
+        // Save data inside database
         await prisma.menuItem.create({
             data: {
                 name: result.data.name,
                 description: result.data.description,
                 category: result.data.category,
                 price: result.data.price,
-                imageUrl: result.data.image!
+                imageUrl: result.data.imageUrl || ""  // Changed from image to imageUrl
             }
         })
     } catch (error: unknown) {
@@ -61,11 +63,12 @@ export const createMenuAction = async (initialState: CreateMenuFormState, formDa
         } else {
             return {
                 errors: {
-                    formError: ["An Unexpected error occured"]
+                    formError: ["An unexpected error occurred"]
                 }
             }
         }
     }
+    
     revalidatePath("/admin/menu");
     redirect("/admin/menu");
 }

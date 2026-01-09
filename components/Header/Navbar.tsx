@@ -5,11 +5,12 @@ import React, { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { SignedIn, UserButton } from "@clerk/nextjs";
+import { useStore } from "@/store/store";
 
 interface Props {}
 
 export const Navbar = (props: Props) => {
-  const cart = [1, 2, 3];
+  const cart = useStore((store) => store.cart)
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -26,7 +27,7 @@ export const Navbar = (props: Props) => {
             <Link href={"/about"} className="text-sm font-medium">
               About
             </Link>
-            <Link href={"/admin"} className="text-sm font-medium">
+            <Link href={"/admin/menu/create"} className="text-sm font-medium">
               Admin
             </Link>
           </div>
@@ -79,7 +80,7 @@ export const Navbar = (props: Props) => {
           <Link href={"/about"} className="block text-sm font-medium">
             About
           </Link>
-          <Link href={"/admin"} className="block text-sm font-medium">
+          <Link href={"/admin/menu/create"} className="block text-sm font-medium">
             Admin
           </Link>
           <div className="relative mt-2">

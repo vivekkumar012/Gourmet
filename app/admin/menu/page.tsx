@@ -9,8 +9,9 @@ import {
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { prisma } from "@/lib/prisma";
-import { UpdateMenu } from "@/components/admin/update-menu";
+
 import DeleteMenuButton from "@/components/delete-menu-button";
+import { UpdateMenu } from "@/components/update-menu";
 
 const page = async () => {
   const menuItems = await prisma.menuItem.findMany({

@@ -1,11 +1,14 @@
 import CTASection from "@/components/cts-section";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Header/Navbar";
+import MenuPreview from "@/components/menu-preview";
+
 import Testimonials from "@/components/testimonial";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Clock, Leaf, Utensils } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
 
 export default function Home() {
   return (
@@ -40,7 +43,7 @@ export default function Home() {
                   size={"lg"}
                   className="text-black border-white hover:bg-white/10 hover:text-white"
                 >
-                  <Link href={"/reservation"}>Make Reservation</Link>
+                  <Link href={""}>Make Reservation</Link>
                 </Button>
               </div>
             </div>
@@ -77,6 +80,9 @@ export default function Home() {
         </section>
 
         {/* Menu Preview Section */}
+        <Suspense fallback={<h1>Loading.....</h1>}>
+          <MenuPreview />
+        </Suspense>
 
         {/* Testimonials Section */}
         <Testimonials />

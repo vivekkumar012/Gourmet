@@ -20,7 +20,7 @@ interface Props {}
 
 const categories = ["Pizza", "Pasta", "Salad", "Dessert", "Drink"];
 
-const page = (props: Props) => {
+const Page = (props: Props) => {
   const [formState, action, isPending] = useActionState(createMenuAction, {
     errors: {},
   });
@@ -51,6 +51,13 @@ const page = (props: Props) => {
         </CardHeader>
         <CardContent>
           <form action={handleAction}>
+            {/* Display general form errors */}
+            {formState.errors.formError && (
+              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded">
+                <p className="text-red-600 text-sm">{formState.errors.formError}</p>
+              </div>
+            )}
+
             <div className="space-y-2">
               <Label>Item Name</Label>
               <Input name="name" placeholder="e.g. Margherita Pizza" />
@@ -58,6 +65,7 @@ const page = (props: Props) => {
                 <p className="text-red-500 text-sm">{formState.errors.name}</p>
               )}
             </div>
+            
             <div className="space-y-2">
               <Label>Description</Label>
               <Textarea
@@ -70,6 +78,7 @@ const page = (props: Props) => {
                 </p>
               )}
             </div>
+            
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Price</Label>
@@ -115,6 +124,7 @@ const page = (props: Props) => {
                 </p>
               )}
             </div>
+            
             <Button disabled={isPending} type="submit" className="w-full mt-4">
               {isPending ? "Loading..." : "Add Menu Item"}
             </Button>
@@ -125,4 +135,4 @@ const page = (props: Props) => {
   );
 };
 
-export default page;
+export default Page;
